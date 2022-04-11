@@ -13,15 +13,15 @@ font-family: 'Numans', sans-serif;
 }
 
 .container{
-height: 100%;
+height: 50%;
 align-content: center;
 }
 
 .card{
-height: 370px;
+height: 270px;
 margin-top: auto;
 margin-bottom: auto;
-width: 400px;
+width: 300px;
 background-color: rgba(0,0,0,0.7) !important;
 }
 
@@ -47,7 +47,7 @@ top: -45px;
 }
 
 .input-group-prepend span{
-width: 50px;
+width: 40px;
 background-color: #FFC312;
 color: black;
 border:0 !important;
@@ -74,7 +74,7 @@ margin-right: 5px;
 .login_btn{
 color: black;
 background-color: #FFC312;
-width: 100px;
+width: 50px;
 }
 
 .login_btn:hover{
