@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DataService } from '../service/data.service';
 
@@ -11,18 +12,24 @@ export class LoginComponent implements OnInit {
   aim="Your Poerfect Banking Partner"
   accnum="account number please..."
   pswrd="password please..."
+ 
+  loginForm=this.fb.group({
+    acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
+    pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]]
+
+  })
 
   acno=""
   pswd=""
 
-  constructor(private router:Router,private ds:DataService) { }
+  constructor(private router:Router,private ds:DataService,private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
 
   accnochange(event:any){
- this.acno=event.target.value
- console.log(this.acno);
+    this.acno=event.target.value
+     console.log(this.acno);
   }
   passwordchange(event:any){
     this.pswd=event.target.value
@@ -32,15 +39,22 @@ export class LoginComponent implements OnInit {
 
 
   login(){
- var acno= this.acno
- //console.log(this.acno);
- var pswd= this.pswd
- let result=this.ds.login(acno,pswd)
- if(result){
-   alert("login sucessfully")
-   this.router.navigateByUrl("dashboard")
-  }
-  }
+ var acno= this.loginForm.value.acno
+ var pswd= this.loginForm.value.pswd
+  console.log(this.acno,this.pswd);
+
+ 
+ if(this.loginForm.valid){
+  let result=this.ds.login(acno,pswd)
+  if(result){
+    alert("login sucessfully")
+    this.router.navigateByUrl("dashboard")
+   }
+   }
+ else{
+   alert("inavalid Form")
+ }
+}
 // login using template referencing variable
 // login(a:any,p:any){
 //   console.log(a.value);
@@ -61,4 +75,5 @@ export class LoginComponent implements OnInit {
 //   }
 //    }
  
+  
 }

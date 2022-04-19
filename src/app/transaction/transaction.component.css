@@ -1,0 +1,16 @@
+table {
+    border: 1px solid cornsilk;
+    width: max-content;
+    height:50px ;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 4.5;
+    color:white;
+    text-align: center;
+    width: 100%;
+  }
+  th,tb{
+    border: 1px solid cornsilk;
+    width: max-content;
+ 
+  }
