@@ -3,16 +3,23 @@
     <span class="quote text-light">Giving you freedom...</span>
     <button (click)="logOut()" class="btn btn-warning">LogOut</button>
   </nav>
-  <h5 style="color: bisque;">Welcome {{user}}</h5>
+  <hr>
+  <button (click)="deletefromParent()" style="float: right;" class=" btn btn-danger" >Delete</button>
+
+  <h5   style="color: bisque;">Welcome {{user}}</h5>
+  <h6 style="color: azure;">Login Details:{{loginDate|date:'mediumDate'|uppercase }}</h6>
   <a routerLink="/transaction" >Transaction History</a>
+ <!-- selector component  <app-delete> -->
+  <app-delete-confirm (onDelete)="onDelete($event)" (onCancel)="onCancel()" [item]=acno></app-delete-confirm>
+
   
   
   
-  <div class="container col-md-12 mt-0">
+  <div [ngClass]="acno? 'style1':'' " class="container col-md-12 mt-0">
       <div class="d-flex justify-content-center h-100">
           <div class="card">
               <div class="card-header">
-                  <h3 class="text-center">Deposit Form</h3>
+                  <h3  appHighlight class="text-center">Deposit Form</h3>
               </div>
              
               <div class="card-body">
@@ -67,11 +74,11 @@
       </div>
   </div>
   
-  <div class="container col-md-12 mt-0">
+  <div [ngClass]="acno? 'style1':'' " class="container col-md-12 mt-0">
     <div class="d-flex justify-content-center h-100% ">
         <div class="card">
             <div class="card-header">
-                <h3 class="text-center">Withdraw Form</h3>
+                <h3  appHighlight class="text-center">Withdraw Form</h3>
             </div>
            
             <div class="card-body">

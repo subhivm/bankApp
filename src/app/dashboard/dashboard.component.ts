@@ -12,11 +12,9 @@ import { DataService } from '../service/data.service';
 
 export class DashboardComponent implements OnInit {
   user:any //to hold username
-// acno=""
-// pswd=""
-// amount=""
+ acno:any
 
-depositForm=this.fb.group({
+  depositForm=this.fb.group({
   acno:['',[Validators.required,Validators.pattern('[0-9]*')]],
   pswd:['',[Validators.required,Validators.pattern('[a-zA-Z0-9]*')]],
   amount:['',[Validators.required,Validators.pattern('[0-9]*')]]
@@ -34,9 +32,11 @@ withdrawForm=this.fb.group({
   amount:['',[Validators.required,Validators.pattern('[0-9]*')]]
 })
 
- 
+loginDate:any
+
 constructor(private ds:DataService,private fb:FormBuilder,private router:Router) {
   this.user=this.ds.currentUser
+  this.loginDate=new Date()
  }
  
   ngOnInit(): void {
@@ -90,4 +90,15 @@ constructor(private ds:DataService,private fb:FormBuilder,private router:Router)
     this.router.navigateByUrl("")
   }
 
+//to delete the account
+  deletefromParent(){
+    this.acno=JSON.parse(localStorage.getItem("currentAcno")||'')
+  }
+
+  onCancel(){
+    this.acno=""
+  }
+  onDelete(event:any){
+    alert("delete account" +event)
+  }
 }
