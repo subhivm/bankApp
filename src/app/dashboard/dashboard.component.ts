@@ -35,15 +35,15 @@ withdrawForm=this.fb.group({
 loginDate:any
 
 constructor(private ds:DataService,private fb:FormBuilder,private router:Router) {
-  this.user=this.ds.currentUser
+  this.user=JSON.parse(localStorage.getItem('currentUser')||'')
   this.loginDate=new Date()
  }
  
   ngOnInit(): void {
-    if(!localStorage.getItem("currentAcno")){
-      alert("please login...")
-      this.router.navigateByUrl("")
-    }
+    // if(!localStorage.getItem("currentAcno")){
+    //   alert("please login...")
+    //   this.router.navigateByUrl("")
+    // }
   }
   deposit(){
     var acno=this.depositForm.value.acno
@@ -51,14 +51,21 @@ constructor(private ds:DataService,private fb:FormBuilder,private router:Router)
     var amount=this.depositForm.value.amount
 
     if(this.depositForm.valid){
-      const result=this.ds.deposit(acno,pswd,amount)
-      if(result){
-         alert(amount+ "succesfully deposited and new balance is "+result)
+      //calling deposit in data service
+      this.ds.deposit(acno,pswd,amount)
+      .subscribe((result:any)=>{
+        if(result){
+          alert(result.message)
         }
+      },
+      (result)=>{
+        alert(result.error.message)
+      }
+      )
 
     }
     else{
-      alert("invalid deposit data")
+      alert("invalid form")
     }
    }
  
@@ -69,10 +76,16 @@ constructor(private ds:DataService,private fb:FormBuilder,private router:Router)
     var amount=this.withdrawForm.value.amount
   
     if(this.withdrawForm.valid){
-    const result=this.ds.withdraw(acno,pswd,amount)
-    if(result){
-       alert(amount+ "succesfully debited and new balance is "+result)
+    this.ds.withdraw(acno,pswd,amount)
+    .subscribe((result:any)=>{
+      if(result){
+        alert(result.message)
       }
+    },
+    (result)=>{
+      alert(result.error.message)
+    }
+    )
 
    }
    else{
@@ -95,10 +108,26 @@ constructor(private ds:DataService,private fb:FormBuilder,private router:Router)
     this.acno=JSON.parse(localStorage.getItem("currentAcno")||'')
   }
 
+
+  //oncancel
   onCancel(){
     this.acno=""
   }
+
+
+  //onDelete
   onDelete(event:any){
-    alert("delete account" +event)
+    //calling onDelete in dataservice
+    this.ds.onDelete(event)
+    .subscribe((result:any)=>{
+      if(result){
+        alert(result.message)
+        this.router.navigateByUrl("")
+      }
+    },
+    (result:any)=>{
+      alert(result.error.message)
+    }
+    )
   }
 }

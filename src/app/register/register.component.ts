@@ -20,7 +20,7 @@ export class RegisterComponent implements OnInit {
 // acno=""
 // pswd=""
 // uname=""
-  constructor(private db:DataService,private router:Router,private fb:FormBuilder) { }
+  constructor(private ds:DataService,private router:Router,private fb:FormBuilder) { }
 
   ngOnInit(): void {
   }
@@ -35,15 +35,19 @@ if( this.registerForm.get('uname')?.errors) {
     var uname=this.registerForm.value.uname
     
     if(this.registerForm.valid){
-      const result=this.db.register(uname,acno,pswd)
+      //asynchronous function
+      this.ds.register(uname,acno,pswd)
+      .subscribe((result:any)=>{
+        if(result){
+          alert(result.message)
+          this.router.navigateByUrl("")//redirect to login,so data injection done at class router
+        }
+        },
+      result=>{
+        alert(result.error.message)
+      }
+      )
     
-      if(result){
-        alert("successfully registerd")
-        this.router.navigateByUrl("")//redirect to login,so data injection done at class router
-      }
-      else{
-        alert("Account already exist ..Please Sign  In")
-      }
 
     }
     else{

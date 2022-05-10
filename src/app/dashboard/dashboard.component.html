@@ -9,6 +9,7 @@
   <h5   style="color: bisque;">Welcome {{user}}</h5>
   <h6 style="color: azure;">Login Details:{{loginDate|date:'mediumDate'|uppercase }}</h6>
   <a routerLink="/transaction" >Transaction History</a>
+  <!-- <app-animation></app-animation> -->
  <!-- selector component  <app-delete> -->
   <app-delete-confirm (onDelete)="onDelete($event)" (onCancel)="onCancel()" [item]=acno></app-delete-confirm>
 
